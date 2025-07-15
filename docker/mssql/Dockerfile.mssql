@@ -1,0 +1,30 @@
+FROM mcr.microsoft.com/azure-sql-edge:latest
+
+# Install Python and dependencies (ODBC driver is already available)
+USER root
+RUN apt-get update && apt-get install -y \
+    python3 python3-pip unixodbc-dev \
+    && pip3 install pyodbc \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Copy initialization files
+COPY db/mssql-init.sql ./mssql-init.sql
+COPY --chmod=755 docker/mssql/mssql-entrypoint.sh ./entrypoint.sh
+COPY --chmod=755 docker/mssql/mssql-init.py ./mssql-init.py
+
+# Set environment variables
+ENV ACCEPT_EULA=Y
+ENV MSSQL_SA_PASSWORD=yourStrong(!)Password
+
+# Switch back to mssql user
+USER mssql
+
+# Expose the SQL Server port
+EXPOSE 1433
+
+# Use our custom entrypoint
+CMD ["./entrypoint.sh"] 

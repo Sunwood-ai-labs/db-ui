@@ -8,6 +8,8 @@ interface TableRowFormProps {
   columns: string[];
   columnTypes?: Record<string, { dataType: string; udtName: string }>;
   initialData?: Record<string, string>;
+  readonlyColumns?: string[];
+  readonlyData?: Record<string, string>;
   onSubmit: (data: Record<string, string>) => Promise<void>;
   submitButtonText: string;
   onCancel?: () => void;
@@ -17,6 +19,8 @@ export default function TableRowForm({
   columns,
   columnTypes = {},
   initialData = {},
+  readonlyColumns = [],
+  readonlyData = {},
   onSubmit,
   submitButtonText,
   onCancel,
@@ -79,6 +83,30 @@ export default function TableRowForm({
       onSubmit={handleSubmit}
       className="flex flex-col p-4 pt-0 gap-4 overflow-y-auto"
     >
+      {/* Readonly columns */}
+      {readonlyColumns.map((column) => (
+        <div key={`readonly-${column}`}>
+          <label
+            htmlFor={`readonly-${column}`}
+            className="text-sm font-medium text-muted-foreground"
+          >
+            {column} (readonly)
+            {columnTypes[column] && (
+              <span className="ml-2 text-xs text-muted-foreground">
+                ({columnTypes[column].udtName})
+              </span>
+            )}
+          </label>
+          <Input
+            id={`readonly-${column}`}
+            value={readonlyData[column] || ""}
+            disabled
+            className="bg-muted/50"
+          />
+        </div>
+      ))}
+
+      {/* Editable columns */}
       {columns.map((column) => (
         <div key={column}>
           <label htmlFor={column} className="text-sm font-medium">

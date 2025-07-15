@@ -9,12 +9,14 @@ import {
 import DeleteRowButton from "./DeleteRowButton";
 import UpdateRowButton from "./UpdateRowButton";
 import { cn } from "../lib/utils";
+import { TableIntrospection } from "@/lib/types";
 
 interface TableDisplayProps {
   tableName: string;
   initialData: Record<string, string | number | boolean>[];
   primaryKeys: string[];
   columnTypes: Record<string, { dataType: string; udtName: string }>;
+  introspection?: TableIntrospection;
 }
 
 export default function TableDisplay({
@@ -22,9 +24,8 @@ export default function TableDisplay({
   initialData,
   primaryKeys,
   columnTypes,
+  introspection,
 }: TableDisplayProps) {
-  console.log(initialData);
-
   const columns = initialData.length > 0 ? Object.keys(initialData[0]) : [];
   const hasPrimaryKey = primaryKeys.length > 0;
 
@@ -61,6 +62,7 @@ export default function TableDisplay({
                       columnTypes={columnTypes}
                       rowData={row}
                       primaryKeys={primaryKeys}
+                      introspection={introspection}
                     />
                     <DeleteRowButton
                       tableName={tableName}

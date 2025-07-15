@@ -1,6 +1,7 @@
 version: "3.8"
 services:
-  db:
+  # PostgreSQL Database
+  postgres:
     image: postgres:15
     restart: always
     environment:
@@ -10,8 +11,32 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - postgres_data:/var/lib/postgresql/data
+      - ./db/pg-init.sql:/docker-entrypoint-initdb.d/init.sql
 
-volumes:
-  postgres_data:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db/mysql-init.sql:/docker-entrypoint-initdb.d/mysql-init.sql
+
+  # MSSQL Database
+  mssql:
+    build:
+      context: .
+      dockerfile: docker/mssql/Dockerfile.mssql
+    restart: always
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: yourStrong(!)Password
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./db/mssql-init.sql:/usr/src/app/mssql-init.sql

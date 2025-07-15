@@ -138,7 +138,7 @@ export default function TablePageClient({
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-hidden" data-testid="table-view">
       <TableHeader
         tableName={tableName}
         columns={initialColumns}
@@ -188,6 +188,7 @@ export default function TablePageClient({
         initialData={initialData.rows}
         primaryKeys={initialPrimaryKeys}
         columnTypes={initialColumnTypes}
+        introspection={introspection}
       />
       <div className="flex items-center justify-between px-4 py-4 border-t">
         <div className="flex items-center gap-2">

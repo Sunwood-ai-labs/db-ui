@@ -6,7 +6,7 @@ export default async function Sidebar() {
   const tables = await getTables();
 
   return (
-    <ShadcnSidebar>
+    <ShadcnSidebar data-testid="sidebar">
       <SearchableSidebarContent tables={tables} />
     </ShadcnSidebar>
   );

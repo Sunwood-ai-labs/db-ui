@@ -45,3 +45,14 @@ export interface TableIntrospection {
   foreignKeys: IntrospectionForeignKey[];
   indexes: IntrospectionIndex[];
 }
+
+export interface Filter {
+  column: string;
+  operator: string;
+  value: string;
+}
+
+export interface Sort {
+  column: string;
+  direction: "asc" | "desc";
+}

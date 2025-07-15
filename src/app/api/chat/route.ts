@@ -1,6 +1,6 @@
 import { createGroq } from "@ai-sdk/groq";
 import { streamText, tool } from "ai";
-import { getFullDatabaseSchema, formatSchemaForAI } from "@/lib/db-schema";
+import { getFullDatabaseSchema, formatSchemaForAI } from "@/lib/db";
 import { z } from "zod";
 // import { ProxyAgent } from "undici";
 

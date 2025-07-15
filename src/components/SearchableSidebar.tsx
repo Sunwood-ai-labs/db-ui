@@ -162,6 +162,7 @@ export default function SearchableSidebarContent({
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onFocus={() => setIsInputFocused(true)}
                   onBlur={() => setIsInputFocused(false)}
+                  data-testid="search-input"
                   className="w-full pl-8 pr-2 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
                 />
               </div>
@@ -193,7 +194,10 @@ export default function SearchableSidebarContent({
                 Object.entries(groupedTables).map(
                   ([schemaName, schemaTables]) => (
                     <div key={schemaName}>
-                      <div className="px-2 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                      <div
+                        className="px-2 py-1 text-xs font-medium text-muted-foreground uppercase tracking-wider"
+                        data-testid="schema-header"
+                      >
                         {schemaName}
                       </div>
                       {schemaTables.map((table) => {
@@ -213,6 +217,7 @@ export default function SearchableSidebarContent({
                                 href={`/${encodeURIComponent(
                                   table.full_table_name
                                 )}`}
+                                data-testid="table-menu-item"
                                 className={`w-full flex items-center gap-2 px-2 py-1.5 text-sm hover:bg-accent rounded-md ${
                                   isSelected
                                     ? "bg-accent/50 border border-accent-foreground/20 shadow-sm"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Play, AlertCircle, CheckCircle, Download } from "lucide-react";
@@ -41,8 +41,6 @@ export default function SQLQueryClient() {
   const { theme, resolvedTheme } = useTheme();
 
   const runQuery = async (query: string) => {
-    console.log(query);
-
     if (!query.trim()) return;
 
     setIsRunning(true);
@@ -132,7 +130,6 @@ export default function SQLQueryClient() {
       // contextMenuGroupId: "1_modification",
       keybindings: [2048 | 3],
       run: () => {
-        console.log("run");
         runQuery(editor.getValue());
       },
     });
@@ -163,6 +160,39 @@ export default function SQLQueryClient() {
       return resolvedTheme === "dark" ? "vs-dark" : "vs-light";
     }
     return theme === "dark" ? "vs-dark" : "vs-light";
+  };
+
+  const formatCellValue = (value: unknown): React.ReactNode => {
+    if (value === null || value === undefined) {
+      return <span className="text-muted-foreground italic">null</span>;
+    }
+
+    // Check if the value looks like JSON (starts with { or [)
+    if (
+      typeof value === "string" &&
+      (value.startsWith("{") || value.startsWith("["))
+    ) {
+      try {
+        const parsed = JSON.parse(value);
+        return (
+          <pre className="whitespace-pre-wrap font-mono text-xs">
+            {JSON.stringify(parsed, null, 2)}
+          </pre>
+        );
+      } catch {
+        // If parsing fails, return the original string
+        return String(value);
+      }
+    } else if (typeof value === "object") {
+      // If it's already an object, stringify it
+      return (
+        <pre className="whitespace-pre-wrap font-mono text-xs">
+          {JSON.stringify(value, null, 2)}
+        </pre>
+      );
+    }
+
+    return String(value);
   };
 
   return (
@@ -287,13 +317,7 @@ export default function SQLQueryClient() {
                           <TableRow key={startIndex + index}>
                             {result.fields.map((field) => (
                               <TableCell key={`${startIndex + index}-${field}`}>
-                                {row[field] === null ? (
-                                  <span className="text-muted-foreground italic">
-                                    null
-                                  </span>
-                                ) : (
-                                  String(row[field])
-                                )}
+                                {formatCellValue(row[field])}
                               </TableCell>
                             ))}
                           </TableRow>

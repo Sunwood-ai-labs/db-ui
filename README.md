@@ -1,6 +1,12 @@
 # Database Management UI
 
-This is a modern, user-friendly self-hosted DB management web ui built with Next.js, TypeScript, and shadcn/ui. It provides a simpler and more elegant alternative to traditional database management tools like pgAdmin.
+This is a modern, user-friendly self-hosted DB management web ui built with Next.js, TypeScript, and shadcn/ui. It provides a simpler and more elegant alternative to traditional database management tools like pgAdmin, phpMyAdmin, and SQL Server Management Studio.
+
+## Supported Databases
+
+- **PostgreSQL** - Full support for PostgreSQL databases
+- **MySQL** - Complete MySQL database management
+- **Microsoft SQL Server** - MSSQL database operations and management
 
 ## Features & Screenshots
 
@@ -64,7 +70,7 @@ docker pull ghcr.io/n7olkachev/db-ui:latest
 
 ### Quick Start with Docker Run
 
-**Run the Application**:
+**For PostgreSQL**:
 
 ```bash
 docker run -d \
@@ -75,6 +81,38 @@ docker run -d \
   -e POSTGRES_PASSWORD=your_password \
   -e POSTGRES_DB=your_database \
   -e POSTGRES_PORT=5432 \
+  -e GROQ_API_KEY=your_groq_api_key \
+  -e GROQ_MODEL=llama-3.1-70b-versatile \
+  ghcr.io/n7olkachev/db-ui:latest
+```
+
+**For MySQL**:
+
+```bash
+docker run -d \
+  --name db-ui-app \
+  -p 3000:3000 \
+  -e MYSQL_HOST=your_database_host \
+  -e MYSQL_USER=your_username \
+  -e MYSQL_PASSWORD=your_password \
+  -e MYSQL_DB=your_database \
+  -e MYSQL_PORT=3306 \
+  -e GROQ_API_KEY=your_groq_api_key \
+  -e GROQ_MODEL=llama-3.1-70b-versatile \
+  ghcr.io/n7olkachev/db-ui:latest
+```
+
+**For Microsoft SQL Server**:
+
+```bash
+docker run -d \
+  --name db-ui-app \
+  -p 3000:3000 \
+  -e MSSQL_HOST=your_database_host \
+  -e MSSQL_USER=your_username \
+  -e MSSQL_PASSWORD=your_password \
+  -e MSSQL_DB=your_database \
+  -e MSSQL_PORT=1433 \
   -e GROQ_API_KEY=your_groq_api_key \
   -e GROQ_MODEL=llama-3.1-70b-versatile \
   ghcr.io/n7olkachev/db-ui:latest
@@ -92,6 +130,8 @@ Replace the database connection details and `your_groq_api_key` with your actual
 
 2. **Run the Built Image**:
 
+   For PostgreSQL:
+
    ```bash
    docker run -d \
      --name db-ui-app \
@@ -106,11 +146,46 @@ Replace the database connection details and `your_groq_api_key` with your actual
      db-ui
    ```
 
+   For MySQL:
+
+   ```bash
+   docker run -d \
+     --name db-ui-app \
+     -p 3000:3000 \
+     -e MYSQL_HOST=your_database_host \
+     -e MYSQL_USER=your_username \
+     -e MYSQL_PASSWORD=your_password \
+     -e MYSQL_DB=your_database \
+     -e MYSQL_PORT=3306 \
+     -e GROQ_API_KEY=your_groq_api_key \
+     -e GROQ_MODEL=llama-3.1-70b-versatile \
+     db-ui
+   ```
+
+   For Microsoft SQL Server:
+
+   ```bash
+   docker run -d \
+     --name db-ui-app \
+     -p 3000:3000 \
+     -e MSSQL_HOST=your_database_host \
+     -e MSSQL_USER=your_username \
+     -e MSSQL_PASSWORD=your_password \
+     -e MSSQL_DB=your_database \
+     -e MSSQL_PORT=1433 \
+     -e GROQ_API_KEY=your_groq_api_key \
+     -e GROQ_MODEL=llama-3.1-70b-versatile \
+     db-ui
+   ```
+
 ### Running from source
 
 - Node.js 18+
 - npm, yarn, pnpm
-- PostgreSQL database (local or remote)
+- One of the supported databases:
+  - PostgreSQL database (local or remote)
+  - MySQL database (local or remote)
+  - Microsoft SQL Server database (local or remote)
 
 ### Building for Production
 
@@ -137,13 +212,57 @@ The application will be available at [http://localhost:3000](http://localhost:30
 
 ### Environment Setup
 
-Copy the `env.example` file to `.env` and fill in your database connection details:
+Choose the appropriate environment template for your database and copy it to `.env`:
+
+**For PostgreSQL:**
 
 ```bash
-cp env.example .env
+cp env.postgresql .env
 ```
 
-Then edit `.env` with your actual database values.
+Example PostgreSQL configuration:
+
+```env
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=sampledb
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin
+```
+
+**For MySQL:**
+
+```bash
+cp env.mysql .env
+```
+
+Example MySQL configuration:
+
+```env
+MYSQL_HOST=localhost
+MYSQL_PORT=3306
+MYSQL_DB=testdb
+MYSQL_USER=admin
+MYSQL_PASSWORD=admin
+```
+
+**For Microsoft SQL Server:**
+
+```bash
+cp env.mssql .env
+```
+
+Example MSSQL configuration:
+
+```env
+MSSQL_HOST=localhost
+MSSQL_PORT=1433
+MSSQL_DB=testdb
+MSSQL_USER=sa
+MSSQL_PASSWORD=yourStrong(!)Password
+```
+
+Then edit `.env` with your actual database connection details.
 
 ### Installation and Development
 

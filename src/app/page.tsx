@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 
 const welcomeMessages = [
   {
-    title: "@n7olkachev/db-ui",
+    title: "Welcome",
     tips: [],
   },
 ];
@@ -13,7 +13,7 @@ export default function Home() {
     welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
 
   return (
-    <div className="flex w-full h-full items-center justify-center">
+    <div className="w-full h-full items-center justify-center">
       <div className="text-center space-y-6 max-w-md">
         <div className="space-y-2">
           <h2 className="text-2xl font-bold">{message.title}</h2>

@@ -6,7 +6,17 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test:integration": "vitest tests/integration --run",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f",
+    "docker:psql": "docker-compose up postgres",
+    "docker:mysql": "docker-compose up mysql",
+    "docker:mssql": "docker-compose up mssql",
+    "setup:psql": "cp env.postgresql .env",
+    "setup:mysql": "cp env.mysql .env",
+    "setup:mssql": "cp env.mssql .env"
   },
   "dependencies": {
     "@ai-sdk/groq": "^1.2.9",
@@ -23,6 +33,8 @@
     "@radix-ui/react-slot": "^1.2.3",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@tailwindcss/typography": "^0.5.16",
+    "@testcontainers/mysql": "^11.0.3",
+    "@types/mssql": "^9.1.7",
     "@types/pg": "^8.15.2",
     "@types/react-syntax-highlighter": "^15.5.13",
     "ai": "^4.3.16",
@@ -35,6 +47,8 @@
     "groq-sdk": "^0.23.0",
     "http-proxy-agent": "^7.0.2",
     "lucide-react": "^0.511.0",
+    "mssql": "^11.0.1",
+    "mysql2": "^3.14.1",
     "next": "15.3.2",
     "next-themes": "^0.4.6",
     "pg": "^8.16.0",
@@ -47,15 +61,20 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.53.0",
     "@tailwindcss/postcss": "^4",
+    "@testcontainers/mssqlserver": "^11.0.3",
+    "@testcontainers/postgresql": "^11.0.3",
     "@types/global-agent": "^3.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/ui": "^3.2.3",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.3"
   }
 }

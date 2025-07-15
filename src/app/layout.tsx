@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import {
+  SidebarProvider,
+  SidebarTrigger,
+  SidebarInset,
+} from "@/components/ui/sidebar";
 import Sidebar from "@/components/Sidebar";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
@@ -31,7 +35,15 @@ export default function RootLayout({
         >
           <SidebarProvider>
             <Sidebar />
-            <main className="w-full overflow-x-hidden">{children}</main>
+            <SidebarInset>
+              <header className="flex h-16 shrink-0 items-center gap-2 px-4">
+                <SidebarTrigger
+                  data-testid="sidebar-trigger"
+                  className="-ml-1"
+                />
+              </header>
+              <main className="overflow-x-hidden">{children}</main>
+            </SidebarInset>
           </SidebarProvider>
         </ThemeProvider>
       </body>

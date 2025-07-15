@@ -1,6 +1,6 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: true
 ---
 
@@ -8,14 +8,14 @@ alwaysApply: true
 
 ## Description
 
-This project is a modern, user-friendly database management web interface built with Next.js, TypeScript, and shadcn/ui. It aims to provide a simpler and more elegant alternative to traditional database management tools like pgAdmin.
+This project is a modern, user-friendly database management web interface built with Next.js, TypeScript, and shadcn/ui. It aims to provide a simpler and more elegant alternative to traditional database management tools like pgAdmin or phpmyadmin.
 
 ## Tech Stack
 
 - **Framework**: Next.js with App Router
 - **Language**: TypeScript
 - **UI Components**: shadcn/ui
-- **Database**: PostgreSQL (primary target)
+- **Database**: PostgreSQL, MySQL and MSSQL must be supported
 - **Styling**: Tailwind CSS
 
 ## Project Goals
@@ -68,7 +68,3 @@ useEffect(() => {
   fetch('/api/users').then(...);
 }, []);
 ```
-
-### Rationale
-
-Server components provide better performance, security, and SEO by moving data fetching to the server. They reduce client-side JavaScript and prevent exposing sensitive operations to the client.
